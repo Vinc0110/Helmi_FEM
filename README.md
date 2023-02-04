@@ -89,8 +89,8 @@ This can be formulated with the third-order boundary condition:
 $\alpha (\frac{\partial \Phi}{\partial x} \hat{x} + \frac{\partial \Phi}{\partial y} \hat{y}) \hat{n} + \gamma \Phi = q$.
 Here, $\hat{x}$, $\hat{y}$, and $\hat{n}$ are unit vectors in x and y direction, and outward normal to the boundary, respectively.
 
-The desired waveguide boundary condition is obtained with $\gamma = \alpha * 1j * k_0$. 
-For the excitation, an incident field $E_{Z,inc} = 1$ is added with $q = \alpha * 2j * k_0$ on the left boundary.
+The desired waveguide boundary condition is obtained with $\gamma = \alpha \cdot 1j \cdot k_0$. 
+For the excitation, an incident field $E_{Z,inc} = 1$ is added with $q = \alpha \cdot 2j \cdot k_0$ on the left boundary.
 The natural (Neumann) boundary condition is a special case with $\gamma = q = 0$, which does not have to be stated explicitly.
 
 ```python
