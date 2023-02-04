@@ -24,7 +24,14 @@ The Helmholtz equation is implemented as a general second-order partial differen
 
 $- \alpha (\frac{\partial^2 \Phi}{\partial x^2} + \frac{\partial^2 \Phi}{\partial y^2}) + \beta \Phi = f$.
 
-Formulation for TM polarization ($\Phi = E_\mathrm{Z}$): $\alpha = 1 / \mu$ and $\beta = -k_0^2 \epsilon$
+1) Formulation for TM polarization: $\Phi = E_Z$, $\alpha = 1 / \mu_r$, and $\beta = -k_0^2 \epsilon_r$.
+
+2) Formulation for TE polarization: $\Phi = H_Z$, $\alpha = 1 / \epsilon_r, and $\beta = -k_0^2 \mu_r$.
+
+With the normalized free-space vacuum wave number $k_0 = \frac{2 \pi}{\Lambda_0} = \frac{2 \pi f}{c_0}$. 
+Here, $c_0$ is propagation velocity (speed of light) in vacuum, expressed in *mesh units per second*.
+
+For $f = 10 GHz$ and a mesh unit of $a = 1 mm$, one gets $k_0 \approx \frac{2 \pi 10 GHz}{3e8 m/s / 1mm} \approx 0.209$.
 
 ```python
 fem.assemble_subdomains(alpha={'air': 1 / mu_r}, beta={'air': -1 * k0 ** 2 * eps_r})
