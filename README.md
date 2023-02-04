@@ -5,12 +5,12 @@ Based on [scikit-fem](https://scikit-fem.readthedocs.io/en/latest/index.html) fo
 
 See the example workflow below and additional examples in the subfolder.
 
-## Features
+![Waveguide fields](./examples/waveguide.png)
+
+# Features:
  - TE and TM polarization
  - Dirichlet and third-order boundary conditions (Neumann, freespace, absorbing)
  - Near-field to Far-field transformation
-
-![Waveguide fields](./examples/waveguide.png)
 
 # Workflow
 ## 1. Create or load a mesh of the simulation domain

@@ -40,10 +40,12 @@ fem.solve()
 from skfem.visuals.matplotlib import plot
 import matplotlib.pyplot as mplt
 
-fig, ax = mplt.subplots(2, 1)
+fig, ax = mplt.subplots(2, 1,figsize=(10, 4))
 plot(fem.basis, fem.phi_re, ax=ax[0])
 plot(fem.basis, fem.phi_im, ax=ax[1])
 ax[0].set_aspect(1)
 ax[1].set_aspect(1)
+ax[0].set_title('Real Part')
+ax[1].set_title('Imaginary Part')
 mplt.tight_layout()
 mplt.show()
