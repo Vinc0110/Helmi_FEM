@@ -5,7 +5,7 @@ Based on [scikit-fem](https://scikit-fem.readthedocs.io/en/latest/index.html) fo
 
 See the example workflow below and additional examples in the subfolder.
 
-![Waveguide fields](./examples/waveguide.png)
+![Waveguide fields](examples/waveguide/waveguide.png)
 
 # Features:
  - TE and TM polarization
