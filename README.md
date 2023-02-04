@@ -22,9 +22,9 @@ element = skfem.ElementTriP2()
 ## 3. Assemble the domains and the boundaries
 The Helmholtz equation is implemented as a general second-order partial differential equation:
 
-$- \alpha \frac{\partial^2 \Phi}{\partial x^2} - \alpha \frac{\partial^2 \Phi}{\partial y^2}$.
+$- \alpha (\frac{\partial^2 \Phi}{\partial x^2} + \frac{\partial^2 \Phi}{\partial y^2}) + \beta \Phi = f$.
 
-Formulation for TM polarization (solve for $E_\mathrm{Z}$ field): $\alpha = 1 / \mu$ and $\beta = $
+Formulation for TM polarization ($\Phi = E_\mathrm{Z}$): $\alpha = 1 / \mu$ and $\beta = -k_0^2 \epsilon$
 
 ```python
 fem.assemble_subdomains(alpha={'air': 1 / mu_r}, beta={'air': -1 * k0 ** 2 * eps_r})
