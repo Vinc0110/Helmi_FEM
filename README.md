@@ -70,11 +70,11 @@ mu_air = 1
 eps_plastic = 2 - 0.1j
 mu_plastic = 1
 fem.assemble_subdomains(alpha={'air': 1 / mu_air, 
-                               'water': 1 / mu_plastic}, 
+                               'plastic': 1 / mu_plastic}, 
                         beta={'air': -1 * k0 ** 2 * eps_air, 
-                              'water': -1 * k0 ** 2 * eps_plastic}, 
+                              'plastic': -1 * k0 ** 2 * eps_plastic}, 
                         f={'air': 0, 
-                           'water': 0})
+                           'plastic': 0})
 ```
 
 Similarly, the boundary conditions are defined. In this example, the upper and lower boundaries, labeled as 'bound_ymax' and 'bound_ymin', are supposed to be perfectly conducting (metallic) waveguide walls. 
