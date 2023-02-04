@@ -3,7 +3,6 @@ import skfem
 from helmi import Helmholtz
 from skfem.visuals.matplotlib import plot
 from scipy.constants import epsilon_0, mu_0
-import math
 import matplotlib.pyplot as mplt
 from timeit import default_timer as timer
 import horn_mesh
@@ -15,8 +14,8 @@ f = 140e9
 n = 1
 eps_r = 1.0
 mu_r = 1.0
+k0 = 2 * np.pi * f * np.sqrt(epsilon_0 * mu_0) * unit
 z0 = np.sqrt(mu_0 / epsilon_0) * unit
-k0 = 2 * math.pi * f * math.sqrt(epsilon_0 * mu_0) * unit
 
 print('Meshing...')
 t1 = timer()
@@ -35,10 +34,12 @@ if plane == 'e':
     # TE; phi=Hz
     alpha = 1 / eps_r
     beta = -1 * k0 ** 2 * mu_r
+    coeff_complementary = -1 * z0 / k0 * alpha
 else:
     # TM; phi=Ez
     alpha = 1 / mu_r
     beta = -1 * k0 ** 2 * eps_r
+    coeff_complementary = 1 / z0 / k0 * alpha
     fem.assemble_boundaries_dirichlet(value={'bound_ymin': 0, 'bound_ymax': 0})
 
 fem.assemble_subdomains(alpha={'air': alpha}, beta={'air': beta})
@@ -82,34 +83,39 @@ phi_feed = fem.phi[fem.basis.get_dofs('bound_feed')][i_feed_y0]
 r = phi_feed / 1.0 - 1
 print(f'r = {np.abs(r) ** 2} = {20 * np.log10(np.abs(r)):.1f} dB')
 
-c = k0 * z0 * mu_r
-hx_re = -1 / c * fem.basis.project(fem.basis.interpolate(fem.phi_im).grad[1])
-#hx_im = 1 / c * fem.basis.project(fem.basis.interpolate(fem.phi_re).grad[1])
-#hx = hx_re + 1j * hx_im
+# complementary fields (in x-y plane);
+phi_comp_x_re = -1 * coeff_complementary * fem.basis.project(fem.basis.interpolate(fem.phi_im).grad[1])
+#phi_comp_x_im = coeff_complementary * fem.basis.project(fem.basis.interpolate(fem.phi_re).grad[1])
+#phi_comp_x = phi_comp_x_re + 1j * phi_comp_x_im
 
-hy_re = -1 / c * fem.basis.project(fem.basis.interpolate(fem.phi_im).grad[0])
-#hy_im = 1 / c * fem.basis.project(fem.basis.interpolate(fem.phi_re).grad[0])
-#hy = hy_re + 1j * hy_im
+phi_comp_y_re = -1 * coeff_complementary * fem.basis.project(fem.basis.interpolate(fem.phi_im).grad[0])
+#phi_comp_y_im = coeff_complementary * fem.basis.project(fem.basis.interpolate(fem.phi_re).grad[0])
+#phi_comp_y = phi_comp_y_re + 1j * phi_comp_y_im
 
 fig, ax = mplt.subplots(2, 1, figsize=(8, 6))
+fig.suptitle(f'Real parts of fields at f = {f * 1e-9} GHz')
 #draw(mesh, ax=ax[0])
 plot(fem.basis, fem.phi_re, colorbar=True, ax=ax[0])
 ax[0].set_aspect('equal')
+ax[0].set_title('Transverse field (Ez or Hz)')
 #draw(mesh, ax=ax[1])
-plot(fem.basis, hy_re + hx_re, colorbar=True, ax=ax[1])
+plot(fem.basis, phi_comp_x_re + phi_comp_y_re, colorbar=True, ax=ax[1])
 ax[1].set_aspect('equal')
+ax[1].set_title('Complementary field (Hx+Hy or Ex+Ey)')
 fig.tight_layout()
 mplt.savefig(f'./horn_{plane}-plane_fields.png')
 mplt.close()
 
 mplt.figure()
 mplt.polar(theta_farfield, phi_db_farfield)
+mplt.title(f'Radiation pattern ({plane.upper()}-Plane, {f * 1e-9} GHz)')
 mplt.tight_layout()
 mplt.savefig(f'./horn_{plane}-plane_pattern_polar.png')
 mplt.close()
 
 mplt.figure()
 mplt.plot(np.rad2deg(theta_farfield), phi_db_farfield)
+mplt.title(f'Radiation pattern ({plane.upper()}-Plane, {f * 1e-9} GHz)')
 mplt.tight_layout()
 mplt.savefig(f'./horn_{plane}-plane_pattern_rect.png')
 mplt.close()
