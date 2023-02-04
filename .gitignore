@@ -130,3 +130,6 @@ dmypy.json
 
 # PyCharm data
 .idea/
+
+# mesh files
+*.msh
