@@ -13,7 +13,7 @@ It is perpendicular to the transverse E field, and it cuts through the center of
 In the H-plane, the waveguide and horn widths are given by the greater of the two dimensions of the rectangular cross-section.
 
 Accordingly, the problem is defined in terms of the Ez field. 
-The complementary Hx and Hy fields can be calculated in post-processing with $H = \frac{1}{-j \omega \mu} \nabla \cross E$.
+The complementary Hx and Hy fields can be calculated in post-processing with $H = \frac{1}{-j \omega \mu} \nabla \times E$.
 
 ![H-plane fields](horn_h-plane_fields.png)
 
@@ -27,7 +27,7 @@ It is perpendicular to the transverse H field, and it cuts through the center of
 In the E-plane, the waveguide and horn widths are given by the smaller of the two dimensions of the rectangular cross-section.
 
 Accordingly, the problem is defined in terms of the Hz field. 
-The complementary Ex and Ey fields can be calculated in post-processing with $E = \frac{1}{j \omega \epsilon} \nabla \cross H$.
+The complementary Ex and Ey fields can be calculated in post-processing with $E = \frac{1}{j \omega \epsilon} \nabla \times H$.
 
 ![E-plane fields](horn_e-plane_fields.png)
 
