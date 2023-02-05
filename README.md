@@ -3,14 +3,20 @@ An open-source implementation of the Helmholtz equation for finite element analy
 
 Based on [scikit-fem](https://scikit-fem.readthedocs.io/en/latest/index.html) for finite element assembly and on [SciPy](https://scipy.org/), [NumPy](https://numpy.org/), and [matplotlib](https://matplotlib.org/) for solving, processing and plotting.
 
+##Installation:
+```python
+pip install git+https://github.com/Vinc0110/Helmi_FEM.git
+```
+
 See the example workflow below and additional examples in the subfolder.
 
 ![Waveguide fields](examples/waveguide/waveguide.png)
 
-# Features:
+## Features:
+ - Supports complex-valued parameters
  - TE and TM polarization
  - Dirichlet and third-order boundary conditions (Neumann, freespace, absorbing)
- - Near-field to Far-field transformation
+ - Near-field to far-field transformation
 
 # Workflow
 ## 1. Create or load a mesh of the simulation domain
