@@ -3,7 +3,7 @@ An open-source implementation of the Helmholtz equation for finite element analy
 
 Based on [scikit-fem](https://scikit-fem.readthedocs.io/en/latest/index.html) for finite element assembly and on [SciPy](https://scipy.org/), [NumPy](https://numpy.org/), and [matplotlib](https://matplotlib.org/) for solving, processing and plotting.
 
-##Installation:
+## Installation:
 ```python
 pip install git+https://github.com/Vinc0110/Helmi_FEM.git
 ```
