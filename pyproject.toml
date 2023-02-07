@@ -1,6 +1,6 @@
 [project]
 name = 'Helmi_FEM'
-version = {attr = "helmi.__version__"}
+version = '0.1.1'
 description = 'Finite element method for solving the electromagnetic Helmholtz equation. Based on scikit-fem and scipy.'
 readme = 'README.md'
 requires-python = '>=3.8'
@@ -42,7 +42,7 @@ repository = 'https://github.com/Vinc0110/Helmi_FEM'
 changelog = "https://github.com/Vinc0110/Helmi_FEM/CHANGELOG.md"
 
 [build-system]
-requires = ['setuptools', 'wheel']
+requires = ['setuptools']
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools.packages.find]
