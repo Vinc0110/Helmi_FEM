@@ -1,6 +1,6 @@
 [project]
 name = 'Helmi_FEM'
-version = '0.2.0'
+version = {attr = "helmi.__version__"}
 description = 'Finite element method for solving the electromagnetic Helmholtz equation. Based on scikit-fem and scipy.'
 readme = 'README.md'
 requires-python = '>=3.8'
@@ -47,3 +47,7 @@ build-backend = "setuptools.build_meta"
 
 [tool.setuptools.packages.find]
 include = ['helmi*']
+
+[tool.setuptools.dynamic]
+version = {attr = "helmi.__version__"}
+readme = {file = "README.md"}
