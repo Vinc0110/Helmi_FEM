@@ -1,5 +1,0 @@
-scikit-fem
-meshio
-numpy
-scipy
-matplotlib
