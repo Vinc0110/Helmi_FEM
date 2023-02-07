@@ -14,7 +14,7 @@ maintainers = [
 ]
 classifiers = [
   "Development Status :: 4 - Beta",
-  "Programming Language :: Python"
+  "Programming Language :: Python",
   "Intended Audience :: Science/Research",
   "License :: OSI Approved :: BSD License",
   "Operating System :: OS Independent"
