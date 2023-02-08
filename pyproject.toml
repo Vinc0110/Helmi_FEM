@@ -1,30 +1,30 @@
 [project]
-name = 'Helmi_FEM'
-version = {attr = "helmi.__version__"}
-description = 'Finite element method for solving the electromagnetic Helmholtz equation. Based on scikit-fem and scipy.'
-readme = 'README.md'
-requires-python = '>=3.8'
-license = {file = 'LICENSE'}
-keywords = ['Helmholtz equation', 'finite-element analysis', 'finite-element method']
+name = "Helmi_FEM"
+dynamic = ["version"]
+description = "Finite element method for solving the electromagnetic Helmholtz equation."
+requires-python = ">=3.8"
+license = {file = "LICENSE"}
+readme = {file = "README.md", content-type = "text/markdown"}
+keywords = ["Helmholtz equation", "finite-element analysis", "finite-element method"]
 authors = [
-  {name = 'Vincent R.'}
+  {name = "Vincent R."}
 ]
 maintainers = [
-  {name = 'Vincent R.'}
+  {name = "Vincent R."}
 ]
 classifiers = [
   "Development Status :: 4 - Beta",
-  "Programming Language :: Python",
+  "Programming Language :: Python :: 3",
   "Intended Audience :: Science/Research",
   "License :: OSI Approved :: BSD License",
   "Operating System :: OS Independent"
 ]
 
 dependencies = [
-    'scikit-fem',
-    'meshio',
-    'numpy',
-    'scipy',
+    "scikit-fem",
+    "meshio",
+    "numpy",
+    "scipy",
 ]
 
 [project.optional-dependencies]
@@ -32,22 +32,18 @@ plot = [
     "matplotlib"
 ]
 mesh = [
-    'gmsh'
+    "gmsh"
 ]
 
 [project.urls]
-homepage = ""
+homepage = "https://github.com/Vinc0110/Helmi_FEM"
 documentation = "https://github.com/Vinc0110/Helmi_FEM/README.md"
-repository = 'https://github.com/Vinc0110/Helmi_FEM'
+repository = 'https://github.com/Vinc0110/Helmi_FEM.git'
 changelog = "https://github.com/Vinc0110/Helmi_FEM/CHANGELOG.md"
 
 [build-system]
-requires = ['setuptools', 'wheel']
+requires = ["setuptools>=64", "wheel"]
 build-backend = "setuptools.build_meta"
-
-[tool.setuptools.packages.find]
-include = ['helmi*']
 
 [tool.setuptools.dynamic]
 version = {attr = "helmi.__version__"}
-readme = {file = "README.md"}

@@ -1,3 +1,3 @@
-__version__ = '0.1.0'
+__version__ = '0.1.1'
 
-from .Helmholtz import Helmholtz
+from helmi.helmholtz import Helmholtz
