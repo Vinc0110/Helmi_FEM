@@ -3,16 +3,21 @@ An open-source implementation of the Helmholtz equation for finite element analy
 
 Based on [scikit-fem](https://scikit-fem.readthedocs.io/en/latest/index.html) for finite element assembly and on [SciPy](https://scipy.org/), [NumPy](https://numpy.org/), and [matplotlib](https://matplotlib.org/) for solving, processing and plotting.
 
-## Installation:
+## Installation
+```
+pip install Helmi-FEM
+```
+
+## Usage
 ```python
-pip install git+https://github.com/Vinc0110/Helmi_FEM.git
+import helmi
 ```
 
 See the example workflow below and additional examples in the subfolder.
 
 ![Waveguide fields](./examples/waveguide/waveguide.png)
 
-## Features:
+## Features
  - Supports complex-valued parameters
  - TE and TM polarization
  - Dirichlet and third-order boundary conditions (Neumann, freespace, absorbing)
@@ -30,6 +35,7 @@ http://gmsh.info/
 ```python
 import skfem
 import numpy as np
+from helmi import Helmholtz
 
 # create a rectangular mesh with skfem:
 x_pts = np.linspace(0, 100, 101)
@@ -49,7 +55,7 @@ mesh = skfem.Mesh.load('mymesh.msh')
 ## 2. Choose a finite element from `skfem.element`. 
 https://scikit-fem.readthedocs.io/en/latest/api.html#module-skfem.element
 
-``` python
+```python
 element = skfem.ElementTriP2()
 fem = Helmholtz(mesh, element)
 ```
