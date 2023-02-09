@@ -10,7 +10,7 @@ pip install git+https://github.com/Vinc0110/Helmi_FEM.git
 
 See the example workflow below and additional examples in the subfolder.
 
-![Waveguide fields](waveguide.png)
+![Waveguide fields](./examples/waveguide/waveguide.png)
 
 ## Features:
  - Supports complex-valued parameters

@@ -37,9 +37,7 @@ mesh = [
 
 [project.urls]
 homepage = "https://github.com/Vinc0110/Helmi_FEM"
-documentation = "https://github.com/Vinc0110/Helmi_FEM/README.md"
 repository = 'https://github.com/Vinc0110/Helmi_FEM.git'
-changelog = "https://github.com/Vinc0110/Helmi_FEM/CHANGELOG.md"
 
 [build-system]
 requires = ["setuptools>=64", "wheel"]
