@@ -1,4 +1,6 @@
 # Helmi_FEM
+[![pypi shield](https://img.shields.io/pypi/v/Helmi_FEM)](https://pypi.org/project/Helmi-FEM/)
+
 An open-source implementation of the Helmholtz equation for finite element analysis of electromagnetic wave propagation and scattering.
 
 Based on [scikit-fem](https://scikit-fem.readthedocs.io/en/latest/index.html) for finite element assembly and on [SciPy](https://scipy.org/), [NumPy](https://numpy.org/), and [matplotlib](https://matplotlib.org/) for solving, processing and plotting.
