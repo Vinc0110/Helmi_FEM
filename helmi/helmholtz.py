@@ -1,4 +1,3 @@
-import skfem
 from .forms import *
 import numpy as np
 from scipy.sparse import coo_matrix, bmat, identity, isspmatrix_coo, block_diag
