@@ -43,6 +43,15 @@ def helmholtz_excitation(v, w):
     return w['f'] * v
 
 
+@skfem.BilinearForm
+def helmholtz_abc2(u, v, w):
+    # get surface section 's' from normal vector 'n'
+    nx, ny = w['n']
+    s = [ny, -1 * nx]
+
+    return -1 * w['gamma2'] * dot(s, u.grad) * dot(s, v.grad)
+
+
 @skfem.Functional
 def helmholtz_near2far(w):
     r_far = w['r']

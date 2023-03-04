@@ -87,9 +87,11 @@ class Helmholtz:
         else:
             self._b_im += b_im
 
-    def assemble_boundaries_3rd(self, gamma: dict = None, q: dict = None) -> None:
-        gamma_re = self.basis.zeros()
-        gamma_im = self.basis.zeros()
+    def assemble_boundaries_3rd(self, gamma: dict = None, gamma2: dict = None, q: dict = None) -> None:
+        gamma1_re = self.basis.zeros()
+        gamma1_im = self.basis.zeros()
+        gamma2_re = self.basis.zeros()
+        gamma2_im = self.basis.zeros()
         q_re = self.basis.zeros()
         q_im = self.basis.zeros()
 
@@ -99,8 +101,13 @@ class Helmholtz:
         for boundary in self.mesh.boundaries.keys():
             dofs = self.basis.get_dofs(boundary)
             if gamma is not None and boundary in gamma:
-                gamma_re[dofs] = gamma[boundary].real
-                gamma_im[dofs] = gamma[boundary].imag
+                gamma1_re[dofs] = gamma[boundary].real
+                gamma1_im[dofs] = gamma[boundary].imag
+                if boundary not in boundaries_lhs:
+                    boundaries_lhs.append(boundary)
+            if gamma2 is not None and boundary in gamma2:
+                gamma2_re[dofs] = gamma2[boundary].real
+                gamma2_im[dofs] = gamma2[boundary].imag
                 if boundary not in boundaries_lhs:
                     boundaries_lhs.append(boundary)
             if q is not None and boundary in q:
@@ -109,29 +116,47 @@ class Helmholtz:
                 if boundary not in boundaries_rhs:
                     boundaries_rhs.append(boundary)
 
-        c = skfem.asm(helmholtz_mass, self.basis.boundary(boundaries_lhs), beta=gamma_re)
-        if self._A_mass_re is None:
-            self._A_mass_re = c
-        else:
-            self._A_mass_re += c
+        if not np.allclose(gamma1_re, 0):
+            c = skfem.asm(helmholtz_mass, self.basis.boundary(boundaries_lhs), beta=gamma1_re)
+            if self._A_mass_re is None:
+                self._A_mass_re = c
+            else:
+                self._A_mass_re += c
 
-        c = skfem.asm(helmholtz_mass, self.basis.boundary(boundaries_lhs), beta=gamma_im)
-        if self._A_mass_im is None:
-            self._A_mass_im = c
-        else:
-            self._A_mass_im += c
+        if not np.allclose(gamma1_im, 0):
+            c = skfem.asm(helmholtz_mass, self.basis.boundary(boundaries_lhs), beta=gamma1_im)
+            if self._A_mass_im is None:
+                self._A_mass_im = c
+            else:
+                self._A_mass_im += c
 
-        c = skfem.asm(helmholtz_excitation, self.basis.boundary(boundaries_rhs), f=q_re)
-        if self._b_re is None:
-            self._b_re = c
-        else:
-            self._b_re += c
+        if not np.allclose(gamma2_re, 0):
+            c = skfem.asm(helmholtz_abc2, self.basis.boundary(boundaries_lhs), gamma2=gamma2_re)
+            if self._A_laplace_re is None:
+                self._A_laplace_re = c
+            else:
+                self._A_laplace_re += c
 
-        c = skfem.asm(helmholtz_excitation, self.basis.boundary(boundaries_rhs), f=q_im)
-        if self._b_im is None:
-            self._b_im = c
-        else:
-            self._b_im += c
+        if not np.allclose(gamma2_im, 0):
+            c = skfem.asm(helmholtz_abc2, self.basis.boundary(boundaries_lhs), gamma2=gamma2_im)
+            if self._A_laplace_im is None:
+                self._A_laplace_im = c
+            else:
+                self._A_laplace_im += c
+
+        if not np.allclose(q_re, 0):
+            c = skfem.asm(helmholtz_excitation, self.basis.boundary(boundaries_rhs), f=q_re)
+            if self._b_re is None:
+                self._b_re = c
+            else:
+                self._b_re += c
+
+        if not np.allclose(q_im, 0):
+            c = skfem.asm(helmholtz_excitation, self.basis.boundary(boundaries_rhs), f=q_im)
+            if self._b_im is None:
+                self._b_im = c
+            else:
+                self._b_im += c
 
     def assemble_boundaries_eigenmode(self, k0: float, n_mode: dict) -> tuple:
         gamma_re = self.basis.zeros()
