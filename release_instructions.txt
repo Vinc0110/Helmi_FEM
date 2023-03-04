@@ -1,0 +1,10 @@
+1) increase version number in helmi/__init__.py/__version__
+2) create and push release tag with latest commit
+3) optional: create release on GitHub with that release tag
+4) build package on the local machine and upload to PyPi:
+    $ cd Helmi_FEM
+    $ /usr/bin/python3 -m build
+    $ /usr/bin/python3 -m twine upload dist/*
+
+Also see instructions in Python packaging tutorial:
+https://packaging.python.org/en/latest/tutorials/packaging-projects/
