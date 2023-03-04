@@ -26,9 +26,9 @@ A first-order absorbing boundary is obtained with the following equations for $\
 
 where $\Phi_{inc}$ is the incident (source) field, $\kappa(s)$ is the curvature of a section $s$ on the boundary.
 
-A second-order absorbing boundary condition also depends on the second derivatives of the total (unknown) field $\Phi$ and the incident field $\Phi_{inc}$ with respect to the section $s$:
+A second-order absorbing boundary condition also depends on the second derivatives of the total (unknown) field $\Phi$ and the incident field $\Phi_{inc}$ with respect to the boundary section $s$:
 - $\gamma = \gamma_1 + \gamma_2 \frac{\partial^2}{\partial s^2}$
-- $\gamma_1 = \alpha (j k_0 + \frac{\kappa(s)}{2} - \frac{j \kappa(s)^2}{8(j \kappa(s) - k_0)))}$
+- $\gamma_1 = \alpha (j k_0 + \frac{\kappa(s)}{2} - \frac{j \kappa^2(s)}{8(j \kappa(s) - k_0)})$
 - $\gamma_2 = \frac{j \alpha}{2(j \kappa(s) - k_0)}$
 - $q = \alpha \frac{\partial \Phi_{inc}}{\partial \hat{n}} + \gamma_1 \Phi_{inc} + \gamma_2 \frac{\partial^2 \Phi_{inc}}{\partial s^2}$
 
