@@ -57,22 +57,22 @@ fem.assemble_subdomains(alpha={'air': alpha_air,
 # get boundary locations (coordinates) and curvature
 x, y = fem.basis.doflocs[:, fem.basis.get_dofs()]
 r = np.sqrt(x ** 2 + y ** 2)
-phi = np.arctan2(y, x)
 kappa = get_curvature(x, y, wrapped=True)
 
 # calculate incident field at boundary
 kr = k0 * (x * np.cos(theta_laser) + y * np.sin(theta_laser))
+
 phi0 = 1.0 * np.exp(-1j * kr)
 dphi0_dn = -1j * kr / r * phi0
-d2phi0_ds2 = -1j * k0 / r * (y * np.cos(theta_laser) + x * np.sin(theta_laser) ** 2) * phi0
+d2phi0_ds2 = (-1j * k0 / r * (-y * np.cos(theta_laser) + x * np.sin(theta_laser))) ** 2 * phi0
 
-# first order absorber
-g1 = 1j * k0 + kappa / 2
-g2 = 0
+# first order absorbing boundary condition
+#g1 = 1j * k0 + kappa / 2
+#g2 = 0
 
-# second order absorber
-#g1 = 1j * k0 + kappa / 2 - 1j * kappa ** 2 / (8 * (1j * kappa - k0))
-#g2 = -1j / (2 * (1j * kappa - k0))
+# second order absorbing boundary condition
+g1 = 1j * k0 + kappa / 2 - 1j * kappa ** 2 / (8 * (1j * kappa - k0))
+g2 = -1j / (2 * (1j * kappa - k0))
 
 q = alpha_air * (dphi0_dn + g1 * phi0 + g2 * d2phi0_ds2)
 fem.assemble_boundaries_3rd(gamma={'bound': alpha_air * g1},
@@ -86,9 +86,6 @@ t1 = timer()
 fem.solve(direct=True, cuda=False)
 t2 = timer()
 print(f'Solving took {t2 - t1:.3f} s\n')
-
-#plot(fem.basis, fem.phi.real, shading='gouraud', colorbar=True)
-#show()
 
 print('near2far()')
 t1 = timer()
