@@ -93,7 +93,7 @@ print(f'Solving took {t2 - t1:.3f} s\n')
 print('near2far()')
 t1 = timer()
 x_farfield = 10000
-y_farfield = np.linspace(-10000, 10000, 1001)
+y_farfield = np.linspace(-30000, 30000, 3001)
 phi_farfield = np.zeros_like(y_farfield, dtype=complex)
 for i in range(len(y_farfield)):
     phi_farfield[i] = fem.near2far(r=(x_farfield, y_farfield[i]), k=k0, field=fem.phi, boundaries=['bound'])
