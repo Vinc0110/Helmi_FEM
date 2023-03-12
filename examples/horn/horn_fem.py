@@ -6,6 +6,7 @@ from scipy.constants import epsilon_0, mu_0
 import matplotlib.pyplot as mplt
 from timeit import default_timer as timer
 import horn_mesh
+import os
 
 # parameters
 unit = 1e-3
@@ -16,6 +17,10 @@ eps_r = 1.0
 mu_r = 1.0
 k0 = 2 * np.pi * f * np.sqrt(epsilon_0 * mu_0) * unit
 z0 = np.sqrt(mu_0 / epsilon_0) * unit
+
+plotpath = './plots'
+if not os.path.exists(plotpath):
+    os.makedirs(plotpath)
 
 print('Meshing...')
 t1 = timer()
@@ -103,19 +108,19 @@ plot(fem.basis, phi_comp_x_re + phi_comp_y_re, colorbar=True, ax=ax[1])
 ax[1].set_aspect('equal')
 ax[1].set_title('Complementary field (Hx+Hy or Ex+Ey)')
 fig.tight_layout()
-mplt.savefig(f'./horn_{plane}-plane_fields.png')
+mplt.savefig(f'./plots/horn_{plane}-plane_fields.png')
 mplt.close()
 
 mplt.figure()
 mplt.polar(theta_farfield, phi_db_farfield)
 mplt.title(f'Radiation pattern ({plane.upper()}-Plane, {f * 1e-9} GHz)')
 mplt.tight_layout()
-mplt.savefig(f'./horn_{plane}-plane_pattern_polar.png')
+mplt.savefig(f'./plots/horn_{plane}-plane_pattern_polar.png')
 mplt.close()
 
 mplt.figure()
 mplt.plot(np.rad2deg(theta_farfield), phi_db_farfield)
 mplt.title(f'Radiation pattern ({plane.upper()}-Plane, {f * 1e-9} GHz)')
 mplt.tight_layout()
-mplt.savefig(f'./horn_{plane}-plane_pattern_rect.png')
+mplt.savefig(f'./plots/horn_{plane}-plane_pattern_rect.png')
 mplt.close()

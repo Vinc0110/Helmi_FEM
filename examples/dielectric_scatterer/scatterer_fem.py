@@ -5,6 +5,7 @@ from helmi.helper import get_curvature
 from skfem.visuals.matplotlib import draw, show, plot
 import matplotlib.pyplot as mplt
 from timeit import default_timer as timer
+import os
 
 
 # wavelength (in layout units) and normalized wave number
@@ -17,6 +18,10 @@ theta_laser = 0
 # simulation settings (empty domain, polarization)
 empty = False
 pol = 'tm'
+
+plotpath = './plots'
+if not os.path.exists(plotpath):
+    os.makedirs(plotpath)
 
 print('Loading mesh')
 t1 = timer()
@@ -140,7 +145,7 @@ ax[1].set_ylabel('y farfield')
 ax[1].set_title(f'Farfield at $x={x_farfield}$')
 mplt.tight_layout()
 # mplt.show()
-mplt.savefig(f'./plots/{plotname}_{field}.png', dpi=300)
+mplt.savefig(plotpath + f'/{plotname}_{field}.png', dpi=300)
 mplt.close()
 
 fig, ax = mplt.subplots(1, 2, figsize=(13, 7), gridspec_kw={'width_ratios': [3, 1]})
@@ -156,5 +161,5 @@ ax[1].set_ylabel('y farfield')
 ax[1].set_title(f'Farfield intensity at $x={x_farfield}$')
 mplt.tight_layout()
 # mplt.show()
-mplt.savefig(f'./plots/{plotname}_{field}_intensity.png', dpi=300)
+mplt.savefig(plotpath + f'/{plotname}_{field}_intensity.png', dpi=300)
 mplt.close()
