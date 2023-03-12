@@ -32,10 +32,14 @@ A second-order absorbing boundary condition also depends on the second derivativ
 - $\gamma_2 = \frac{j \alpha}{2(j \kappa(s) - k_0)}$
 - $q = \alpha \frac{\partial \Phi_{inc}}{\partial \hat{n}} + \gamma_1 \Phi_{inc} + \gamma_2 \frac{\partial^2 \Phi_{inc}}{\partial s^2}$
 
+**Warning: second-order ABC equations are likely incorrect!**
+
 ## Solution without the scatterer
 An empty domain is created with $\epsilon_{air} = \epsilon_{cladding} = \epsilon_{core} = 1$:
-![solution](scatterer_empty.png)
+![solution](scatterer_empty_Hz_intensity.png)
+![solution](scatterer_empty_Ez_intensity.png)
 
 ## Solution with the scatterer
 The scattering is simulated with $\epsilon_{air} = 1$, $\epsilon_{cladding} = 1.444^2$, and $\epsilon_{core} = 1.4475^2$:
-![solution](scatterer_fiber.png)
+![solution](scatterer_fiber_Hz_intensity.png)
+![solution](scatterer_fiber_Ez_intensity.png)

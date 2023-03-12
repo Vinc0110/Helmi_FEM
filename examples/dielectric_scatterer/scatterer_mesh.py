@@ -4,7 +4,9 @@ import gmsh
 def mesh():
     r_core = 10 / 2
     r_cladding = 125 / 2
-    r_box = 200 / 2
+    r_box = 400 / 2
+    x_fiber = -100
+    y_fiber = 0
 
     mesh_fiber = 2
     mesh_box = 4
@@ -12,37 +14,38 @@ def mesh():
     gmsh.initialize()
     gmsh.model.add('Scatterer')
 
-    tag_circle_center = gmsh.model.geo.addPoint(0, 0, 0, meshSize=mesh_fiber)
+    tag_pt_box_center = gmsh.model.geo.addPoint(0, 0, 0, meshSize=mesh_fiber)
+    tag_pt_fiber_center = gmsh.model.geo.addPoint(x_fiber, y_fiber, 0, meshSize=mesh_fiber)
 
-    tag_circle_core_x0 = gmsh.model.geo.addPoint(-1 * r_core, 0, 0, meshSize=mesh_fiber)
-    tag_circle_core_x1 = gmsh.model.geo.addPoint(r_core, 0, 0, meshSize=mesh_fiber)
-    tag_circle_core_y0 = gmsh.model.geo.addPoint(0, -1 * r_core, 0, meshSize=mesh_fiber)
-    tag_circle_core_y1 = gmsh.model.geo.addPoint(0, r_core, 0, meshSize=mesh_fiber)
+    tag_pt_core_x0 = gmsh.model.geo.addPoint(x_fiber - r_core, y_fiber, 0, meshSize=mesh_fiber)
+    tag_pt_core_x1 = gmsh.model.geo.addPoint(x_fiber + r_core, y_fiber, 0, meshSize=mesh_fiber)
+    tag_pt_core_y0 = gmsh.model.geo.addPoint(x_fiber, y_fiber - r_core, 0, meshSize=mesh_fiber)
+    tag_pt_core_y1 = gmsh.model.geo.addPoint(x_fiber, y_fiber + r_core, 0, meshSize=mesh_fiber)
 
-    tag_circle_cladding_x0 = gmsh.model.geo.addPoint(-1 * r_cladding, 0, 0, meshSize=mesh_fiber)
-    tag_circle_cladding_x1 = gmsh.model.geo.addPoint(r_cladding, 0, 0, meshSize=mesh_fiber)
-    tag_circle_cladding_y0 = gmsh.model.geo.addPoint(0, -1 * r_cladding, 0, meshSize=mesh_fiber)
-    tag_circle_cladding_y1 = gmsh.model.geo.addPoint(0, r_cladding, 0, meshSize=mesh_fiber)
+    tag_circle_cladding_x0 = gmsh.model.geo.addPoint(x_fiber - r_cladding, y_fiber, 0, meshSize=mesh_fiber)
+    tag_circle_cladding_x1 = gmsh.model.geo.addPoint(x_fiber + r_cladding, y_fiber, 0, meshSize=mesh_fiber)
+    tag_circle_cladding_y0 = gmsh.model.geo.addPoint(x_fiber, y_fiber - r_cladding, 0, meshSize=mesh_fiber)
+    tag_circle_cladding_y1 = gmsh.model.geo.addPoint(x_fiber, y_fiber + r_cladding, 0, meshSize=mesh_fiber)
 
     tag_circle_box_x0 = gmsh.model.geo.addPoint(-1 * r_box, 0, 0, meshSize=mesh_box)
     tag_circle_box_x1 = gmsh.model.geo.addPoint(r_box, 0, 0, meshSize=mesh_box)
     tag_circle_box_y0 = gmsh.model.geo.addPoint(0, -1 * r_box, 0, meshSize=mesh_box)
     tag_circle_box_y1 = gmsh.model.geo.addPoint(0, r_box, 0, meshSize=mesh_box)
 
-    tag_arc_core0 = gmsh.model.geo.addCircleArc(tag_circle_core_x1, tag_circle_center, tag_circle_core_y1)
-    tag_arc_core1 = gmsh.model.geo.addCircleArc(tag_circle_core_y1, tag_circle_center, tag_circle_core_x0)
-    tag_arc_core2 = gmsh.model.geo.addCircleArc(tag_circle_core_x0, tag_circle_center, tag_circle_core_y0)
-    tag_arc_core3 = gmsh.model.geo.addCircleArc(tag_circle_core_y0, tag_circle_center, tag_circle_core_x1)
+    tag_arc_core0 = gmsh.model.geo.addCircleArc(tag_pt_core_x1, tag_pt_fiber_center, tag_pt_core_y1)
+    tag_arc_core1 = gmsh.model.geo.addCircleArc(tag_pt_core_y1, tag_pt_fiber_center, tag_pt_core_x0)
+    tag_arc_core2 = gmsh.model.geo.addCircleArc(tag_pt_core_x0, tag_pt_fiber_center, tag_pt_core_y0)
+    tag_arc_core3 = gmsh.model.geo.addCircleArc(tag_pt_core_y0, tag_pt_fiber_center, tag_pt_core_x1)
 
-    tag_arc_cladding0 = gmsh.model.geo.addCircleArc(tag_circle_cladding_x1, tag_circle_center, tag_circle_cladding_y1)
-    tag_arc_cladding1 = gmsh.model.geo.addCircleArc(tag_circle_cladding_y1, tag_circle_center, tag_circle_cladding_x0)
-    tag_arc_cladding2 = gmsh.model.geo.addCircleArc(tag_circle_cladding_x0, tag_circle_center, tag_circle_cladding_y0)
-    tag_arc_cladding3 = gmsh.model.geo.addCircleArc(tag_circle_cladding_y0, tag_circle_center, tag_circle_cladding_x1)
+    tag_arc_cladding0 = gmsh.model.geo.addCircleArc(tag_circle_cladding_x1, tag_pt_fiber_center, tag_circle_cladding_y1)
+    tag_arc_cladding1 = gmsh.model.geo.addCircleArc(tag_circle_cladding_y1, tag_pt_fiber_center, tag_circle_cladding_x0)
+    tag_arc_cladding2 = gmsh.model.geo.addCircleArc(tag_circle_cladding_x0, tag_pt_fiber_center, tag_circle_cladding_y0)
+    tag_arc_cladding3 = gmsh.model.geo.addCircleArc(tag_circle_cladding_y0, tag_pt_fiber_center, tag_circle_cladding_x1)
 
-    tag_arc_box0 = gmsh.model.geo.addCircleArc(tag_circle_box_x1, tag_circle_center, tag_circle_box_y1)
-    tag_arc_box1 = gmsh.model.geo.addCircleArc(tag_circle_box_y1, tag_circle_center, tag_circle_box_x0)
-    tag_arc_box2 = gmsh.model.geo.addCircleArc(tag_circle_box_x0, tag_circle_center, tag_circle_box_y0)
-    tag_arc_box3 = gmsh.model.geo.addCircleArc(tag_circle_box_y0, tag_circle_center, tag_circle_box_x1)
+    tag_arc_box0 = gmsh.model.geo.addCircleArc(tag_circle_box_x1, tag_pt_box_center, tag_circle_box_y1)
+    tag_arc_box1 = gmsh.model.geo.addCircleArc(tag_circle_box_y1, tag_pt_box_center, tag_circle_box_x0)
+    tag_arc_box2 = gmsh.model.geo.addCircleArc(tag_circle_box_x0, tag_pt_box_center, tag_circle_box_y0)
+    tag_arc_box3 = gmsh.model.geo.addCircleArc(tag_circle_box_y0, tag_pt_box_center, tag_circle_box_x1)
 
     tag_loop_box = gmsh.model.geo.addCurveLoop([tag_arc_box0, tag_arc_box1, tag_arc_box2, tag_arc_box3])
     tag_loop_core = gmsh.model.geo.addCurveLoop([tag_arc_core0, tag_arc_core1, tag_arc_core2, tag_arc_core3])
@@ -61,7 +64,7 @@ def mesh():
 
     gmsh.model.geo.synchronize()
     gmsh.model.mesh.generate(2)
-    #gmsh.fltk.run()
+    gmsh.fltk.run()
     gmsh.write('./scatterer.msh')
     gmsh.finalize()
 
