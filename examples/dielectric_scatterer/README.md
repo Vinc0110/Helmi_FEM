@@ -5,7 +5,7 @@ Three subdomains with circular boundaries/interfaces:
 - 'air': Outside domain surrounding the scatterer
 - 'cladding': Outside part of the scatterer (cladding of an optical fiber)
 - 'core': Inside part of the scatterer (core of an optical fiber)
-![mesh](scatterer_mesh.png)
+![mesh](plots/scatterer_mesh.png)
 
 ## Subdomain parameters
 The subdomain parameters are defined for TM polarization:
@@ -35,11 +35,19 @@ A second-order absorbing boundary condition also depends on the second derivativ
 **Warning: second-order ABC equations are likely incorrect!**
 
 ## Solution without the scatterer
-An empty domain is created with $\epsilon_{air} = \epsilon_{cladding} = \epsilon_{core} = 1$:
-![solution](scatterer_empty_Hz_intensity.png)
-![solution](scatterer_empty_Ez_intensity.png)
+An empty domain is created with $\epsilon_{air} = \epsilon_{cladding} = \epsilon_{core} = 1$.
+### TE polarization ($\Phi = E_z$)
+![solution](plots/scatterer_empty_Ez.png)
+![solution](plots/scatterer_empty_Ez_intensity.png)
+### TM polarization ($\Phi = H_z$)
+![solution](plots/scatterer_empty_Hz.png)
+![solution](plots/scatterer_empty_Hz_intensity.png)
 
 ## Solution with the scatterer
-The scattering is simulated with $\epsilon_{air} = 1$, $\epsilon_{cladding} = 1.444^2$, and $\epsilon_{core} = 1.4475^2$:
-![solution](scatterer_fiber_Hz_intensity.png)
-![solution](scatterer_fiber_Ez_intensity.png)
+The scattering is simulated with $\epsilon_{air} = 1$, $\epsilon_{cladding} = 1.444^2$, and $\epsilon_{core} = 1.4475^2$.
+### TE polarization ($\Phi = E_z$)
+![solution](plots/scatterer_fiber_Ez.png)
+![solution](plots/scatterer_fiber_Ez_intensity.png)
+### TM polarization ($\Phi = H_z$)
+![solution](plots/scatterer_fiber_Hz.png)
+![solution](plots/scatterer_fiber_Hz_intensity.png)
