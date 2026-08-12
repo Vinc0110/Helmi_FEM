@@ -3,8 +3,15 @@
 3) optional: create release on GitHub with that release tag
 4) build package on the local machine and upload to PyPi:
     $ cd Helmi_FEM
-    $ /usr/bin/python3 -m build
-    $ /usr/bin/python3 -m twine upload dist/*
+    $ python -m build
+    $ python -m twine check dist/*
+    $ python -m twine upload dist/*
+
+It works best to create a Twine configuration file $HOME/.pypirc and enter the API token as the password.
+
+[pypi]
+username = __token__
+password = <the token value, including the `pypi-` prefix>
 
 Also see instructions in Python packaging tutorial:
 https://packaging.python.org/en/latest/tutorials/packaging-projects/
