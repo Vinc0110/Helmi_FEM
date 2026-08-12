@@ -485,8 +485,8 @@ class Helmholtz:
         s = np.sqrt(1j * k / (8 * np.pi * r_abs)) * np.exp(-1j * k * r_abs)
         return s * skfem.asm(helmholtz_near2far, self.basis.boundary(boundaries), r=r, k=k, phi=field)
 
-    def flux_ez(self, ez: skfem.DiscreteField, boundaries: list):
-        pass
+    def flux(self, field: skfem.DiscreteField, boundaries: list, flux_coeff):
+        return skfem.asm(helmholtz_flux, self.basis.boundary(boundaries), coeff=flux_coeff, phi=field)
 
     def create_gif(self, field: skfem.DiscreteField, n_frames=36):
         import matplotlib.pyplot as mplt
