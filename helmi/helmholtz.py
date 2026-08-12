@@ -172,7 +172,7 @@ class Helmholtz:
         for boundary in self.mesh.boundaries.keys():
             if boundary in n_mode:
                 dofs = self.basis.get_dofs(boundary)
-                kt2, phi, ebasis = self.solve_eigenmodes_boundary(boundary, n_modes=n_mode[boundary])
+                kt2, phi = self.solve_eigenmodes_boundary(boundary, n_modes=n_mode[boundary])
                 phi_n[boundary] = phi[:, n_mode[boundary] - 1]
                 k2_eigen = k0 ** 2 - kt2[n_mode[boundary] - 1]
                 if k2_eigen < 0:
@@ -315,14 +315,10 @@ class Helmholtz:
         self.phi = self.phi_re + 1j * self.phi_im
 
     def solve_eigenmodes_boundary(self, boundary, n_modes=1):
-        # dofs = self.basis.get_dofs(facets=boundary)
-        # x, y = self.basis.doflocs[:, dofs]
-        # mesh = skfem.MeshLine(p=y)
-
         def mapping(p):
             # define mapping from 2d coordinates of boundary elements (p = [[x1, x2, ...], [y1, y2, ...]])
             # to 1d coordinates (positions) of line elements
-            return p[1]
+            return np.sqrt((p[0] + p[0][0]) ** 2 + (p[1] + p[1][0]) ** 2)
 
         mesh, facets = self.mesh.trace(facets=boundary, mtype=skfem.MeshLine, project=mapping)
 
@@ -335,15 +331,21 @@ class Helmholtz:
                           'functions.', stacklevel=2)
             element = skfem.ElementLinePp(self.element.maxdeg)
 
-        basis = skfem.Basis(mesh, element)
+        basis_eigen = skfem.Basis(mesh, element)
 
-        A = skfem.asm(helmholtz_laplace, basis, alpha=basis.ones())
-        B = skfem.asm(helmholtz_mass, basis, beta=basis.ones())
+        A = skfem.asm(helmholtz_laplace, basis_eigen, alpha=basis_eigen.ones())
+        B = skfem.asm(helmholtz_mass, basis_eigen, beta=basis_eigen.ones())
 
         solver = skfem.solver_eigen_scipy_sym(k=n_modes, sigma=1)
-        kt2, phi = skfem.solve(*skfem.condense(A, B, D=basis.get_dofs()), solver=solver)
+        kt2, phi = skfem.solve(*skfem.condense(A, B, D=basis_eigen.get_dofs()), solver=solver)
 
-        return kt2, phi, basis
+        pts_boundary = self.basis.doflocs[:, self.basis.get_dofs(boundary)]
+        pts_eigen = basis_eigen.doflocs[0]
+
+        idx_remapping = []
+        for pt in mapping(pts_boundary):
+            idx_remapping.append(np.argwhere(np.isclose(pts_eigen, pt))[0][0])
+        return kt2, phi[idx_remapping]
 
     def solve_eigenmodes(self, psi_x: float, psi_y: float, n_modes: int = 1):
         xmin, ymin = np.amin(self.basis.doflocs, axis=1)
