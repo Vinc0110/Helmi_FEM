@@ -1,5 +1,5 @@
 import skfem
-from skfem.helpers import dot
+from skfem.helpers import dot, grad
 import numpy as np
 
 
@@ -63,3 +63,8 @@ def helmholtz_near2far(w):
 
     return (dot(r_far_unit, n_bound) * phi + 1j / k * dot(n_bound, phi.grad)) * np.exp(1j * k * dot(r_far_unit, r_bound))
 
+
+@skfem.Functional
+def helmholtz_flux(w):
+    s_poynting = np.abs(-0.5 * w['phi'] * w['coeff'] * grad(w['phi']))
+    return np.sqrt(s_poynting[0] ** 2 + s_poynting[1] ** 2)
